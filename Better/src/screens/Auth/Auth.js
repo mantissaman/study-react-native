@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Button, TextInput, StyleSheet, Platform } from 'react-native';
+import { View,  Button,  StyleSheet, ImageBackground} from 'react-native';
 import startMainTabs from '../MainTabs/startMainTabs';
 import DefaultInput from '../../components/UI/DefaultInput/DefaultInput';
+import HeadingText from '../../components/UI/HeadingText/HeadingText';
+import MainText from '../../components/UI/MainText/MainText';
+import ButtonWithBG from '../../components/UI/ButtonWithBG/ButtonWithBG';
+import bgImage from "../../assets/bg.jpg"
 
 class AuthScreen extends Component {
     loginHandler = () => {
@@ -9,16 +13,22 @@ class AuthScreen extends Component {
     }
     render() {
         return (
+            <ImageBackground source={bgImage} style={styles.bgImage}>
             <View style={styles.container}>
-                <Text>Please Log In</Text>
-                <Button title="Switch to Login"></Button>
+            
+                <MainText>
+                    <HeadingText>Please Log In</HeadingText>
+                </MainText>
+                <ButtonWithBG color="#29aaf4" onPress={()=> alert("Hello")}>Switch to Login</ButtonWithBG>
                 <View style={styles.inputContainer}>
-                    <DefaultInput placeholder="Your E-Mail Address"></DefaultInput>
-                    <DefaultInput placeholder="Password"></DefaultInput>
-                    <DefaultInput placeholder="Confirm Password"></DefaultInput>
+                    <DefaultInput placeholder="Your E-Mail Address" style={styles.input}></DefaultInput>
+                    <DefaultInput placeholder="Password" style={styles.input}></DefaultInput>
+                    <DefaultInput placeholder="Confirm Password" style={styles.input}></DefaultInput>
                 </View>
-                <Button title="Submit" onPress={this.loginHandler}></Button>
+                <ButtonWithBG color="#29aaf4" onPress={this.loginHandler}>Submit</ButtonWithBG>
+                
             </View>
+            </ImageBackground>
         );
     }
 }
@@ -30,6 +40,14 @@ const styles = StyleSheet.create({
     },
     inputContainer:{
         width:"80%"
+    },
+    input :{
+        backgroundColor: "#eee",
+        borderColor: "#bbb"
+    },
+    bgImage :{
+        width:"100%",
+        flex: 1
     }
 });
 
