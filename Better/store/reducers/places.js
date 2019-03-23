@@ -21,7 +21,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 places: state.places.filter((item) => {
-                    return item.key !== state.selectedPlace.key;
+                    return item.key !== action.placeKey;
                 })
             };
 

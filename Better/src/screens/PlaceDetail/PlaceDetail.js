@@ -1,40 +1,55 @@
 
 import React, { Component } from 'react';
-import { View, Image, Text, Button, StyleSheet,Platform, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'
+import { View, Image, Text, Button, StyleSheet, Platform, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {connect} from 'react-redux';
+import { deletePlace } from '../../../store/actions/index';
 
-const placeDetail = props => {
-    return (
-
-    <View style={styles.container}>
-        <Image source={props.selectedPlace.image} style={styles.placeImage}></Image>
-        <Text style={styles.placeName}>{props.selectedPlace.name}</Text>
-        <View style={styles.deleteButton}>
-            <TouchableOpacity onPress={props.onItemDeleted}>
-                <View>
-                <Icon size={50} color="red" name="ios-trash"></Icon>
+class PlaceDetail extends Component {
+    placeDeletedHandler =() =>{
+        this.props.onDeletePlace(this.props.selectedPlace.key);
+        this.props.navigator.pop();
+    }
+    render() {
+        return (
+            <View style={styles.container}>
+                <Image source={this.props.selectedPlace.image} style={styles.placeImage}></Image>
+                <Text style={styles.placeName}>{this.props.selectedPlace.name}</Text>
+                <View style={styles.deleteButton}>
+                    <TouchableOpacity onPress={this.placeDeletedHandler}>
+                        <View>
+                            <Icon size={50} color="red" name="ios-trash"></Icon>
+                        </View>
+                    </TouchableOpacity>
                 </View>
-            </TouchableOpacity>
-        </View>
-    </View>
+            </View>);
+    }
+}
 
-    );
-};
 const styles = StyleSheet.create({
     container: {
         marginTop: (Platform.OS === 'ios') ? 54 : 5,
     },
-    placeImage:{
+    placeImage: {
         width: "100%",
         height: 200
     },
     placeName: {
-        fontWeight:"bold",
-        textAlign:'center',
+        fontWeight: "bold",
+        textAlign: 'center',
         fontSize: 28
     },
-    deleteButton:{
-        alignItems:'center'
+    deleteButton: {
+        alignItems: 'center'
     }
-  });
-export default placeDetail;
+});
+
+
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onDeletePlace: (key) => dispatch(deletePlace(key))
+    };
+}
+
+export default connect(null, mapDispatchToProps)(PlaceDetail);
